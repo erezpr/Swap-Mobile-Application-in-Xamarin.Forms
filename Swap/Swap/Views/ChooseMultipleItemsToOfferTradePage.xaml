@@ -1,0 +1,82 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:CustomViews="clr-namespace:Swap.CustomViews"
+             x:Class="Swap.Views.ChooseMultipleItemsToOfferTradePage"
+             Padding="10">
+    <Shell.TitleView>
+        <StackLayout Orientation="Horizontal">
+            <Image Source="ic_close.png"
+                   VerticalOptions="CenterAndExpand">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding CloseCommand}" />
+                </Image.GestureRecognizers>
+            </Image>
+            <Label Text="{Binding SelectedItemCounterTitle}"
+                   TextColor="White"
+                   Margin="15,0"
+                   HorizontalOptions="EndAndExpand"
+                   VerticalOptions="CenterAndExpand"
+                   FontAttributes="Bold"
+                   FontSize="20" />
+        </StackLayout>
+    </Shell.TitleView>
+    <ContentPage.Resources>
+        <Style TargetType="StackLayout">
+            <Setter Property="VisualStateManager.VisualStateGroups">
+                <VisualStateGroupList>
+                    <VisualStateGroup x:Name="CommonStates">
+                        <VisualState x:Name="Normal" />
+                        <VisualState x:Name="Selected">
+                            <VisualState.Setters>
+                                <Setter Property="BackgroundColor"
+                                        Value="LightSkyBlue" />
+                            </VisualState.Setters>
+                        </VisualState>
+                    </VisualStateGroup>
+                </VisualStateGroupList>
+            </Setter>
+        </Style>
+    </ContentPage.Resources>
+    <StackLayout>
+        <CollectionView ItemsSource="{Binding MyItems}"
+                        FlowDirection="RightToLeft"
+                        VerticalOptions="StartAndExpand"
+                        SelectionMode="Multiple"
+                        SelectedItems="{Binding SelectedItems, Mode=TwoWay}"
+                        SelectionChangedCommand="{Binding SelectionChangedCommand}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout Padding="10"
+                                 Orientation="Horizontal"
+                                 FlowDirection="RightToLeft">
+                        <Frame Padding="0">
+                            <ffimageloading:CachedImage HeightRequest="100"
+                                                        WidthRequest="100"
+                                                        Aspect="Fill"
+                                                        Source="{Binding ImageSource}">
+                                <ffimageloading:CachedImage.CacheKeyFactory>
+                                    <CustomViews:CustomCacheKeyFactory />
+                                </ffimageloading:CachedImage.CacheKeyFactory>
+                            </ffimageloading:CachedImage>
+                        </Frame>
+                        <StackLayout Orientation="Vertical">
+                            <Label PropertyChanged="Label_PropertyChanged"
+                                   Text="{Binding ItemName}"
+                                   FontAttributes="Bold"
+                                   FontSize="20"
+                                   TextColor="BlueViolet" />
+                            <Label Text="{Binding UpdateTime, StringFormat='עודכן ב {0}'}"
+                                   VerticalOptions="EndAndExpand" />
+                        </StackLayout>
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Button Text="אישור"
+                HorizontalOptions="CenterAndExpand"
+                Command="{Binding Submit}"
+                Style="{StaticResource orangeRedButton}" />
+    </StackLayout>
+</ContentPage>

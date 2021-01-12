@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:pancakeView="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             mc:Ignorable="d"
+             x:Class="Swap.Views.NoInternetPage">
+    <pancakeView:PancakeView BackgroundGradientStartColor="#800080"
+                             BackgroundGradientEndColor="#ffc0cb">
+
+        <StackLayout VerticalOptions="Center"
+                     Spacing="100">
+            <Label Text="אין חיבור לאינטרנט"
+                   FontAttributes="Bold"
+                   FontSize="30"
+                   TextColor="Khaki"
+                   HorizontalTextAlignment="Center" />
+        </StackLayout>
+    </pancakeView:PancakeView>
+</ContentPage>

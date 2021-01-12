@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage   NavigationPage.HasNavigationBar="False"
+               xmlns="http://xamarin.com/schemas/2014/forms"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               xmlns:ContentViews="clr-namespace:Swap.ContentViews"
+               xmlns:converters="clr-namespace:Swap.Converters"
+               xmlns:pancakeView="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+               x:Class="Swap.Views.RegisterPage"
+               x:Name="page">
+    <ContentPage.Resources>
+        <converters:NegateBooleanConverter x:Key="NegateBooleanConverter" />
+    </ContentPage.Resources>
+    <RelativeLayout BackgroundColor="#f3f3f3"
+                    IsEnabled="{Binding IsBusy, Converter={StaticResource NegateBooleanConverter}}">
+        <pancakeView:PancakeView Padding="70,10"
+                                 x:Name="Topper"
+                                 HeightRequest="98"
+                                 BackgroundGradientStartColor="#536976"
+                                 BackgroundGradientEndColor="#BBD2C5"
+                                 CornerRadius="0"
+                                 RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}">
+            <Image x:Name="logo"
+                   Aspect="AspectFit" />
+        </pancakeView:PancakeView>
+        <ScrollView Orientation="Vertical"
+                    IsVisible="{Binding IsUserLogin, Converter={StaticResource NegateBooleanConverter}}"
+                    RelativeLayout.XConstraint="{ConstraintExpression Type=Constant, Constant=0}"
+                    RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToView, ElementName=Topper, Property=Height, Factor=1, Constant=3}"
+                    RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+                    RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0.90}">
+            <StackLayout Spacing="0"
+                         Padding="16,20,16,0">
+                <StackLayout x:Name="loginStacklayout"
+                             Spacing="1">
+                    <ContentViews:ImageEntryContentView Title="אימייל"
+                                                        Placeholder="הכנס אימייל"
+                                                        Text="{Binding BindingContext.Email, Source={x:Reference page}, Mode=TwoWay}"
+                                                        IsVisible="{Binding BindingContext.IsFBSignUpMode, Source={x:Reference page},Converter={x:StaticResource NegateBooleanConverter}, Mode=TwoWay}"
+                                                        ImageSource="ic_email.png"
+                                                        IsRequired="True"
+                                                        Keyboard="Email" />
+                    <ContentViews:ImageEntryContentView Title="סיסמה"
+                                                        Placeholder="הכנס סיסמה"
+                                                        Text="{Binding BindingContext.Password, Source={x:Reference page}, Mode=TwoWay}"
+                                                        IsVisible="{Binding BindingContext.IsFBSignUpMode, Source={x:Reference page},Converter={x:StaticResource NegateBooleanConverter}, Mode=TwoWay}"
+                                                        ImageSource="ic_password.png"
+                                                        IsRequired="True"
+                                                        IsPassword="True" />
+                </StackLayout>
+                <Frame x:Name="signInFrame"
+                       BackgroundColor="#f3f3f3"
+                       HasShadow="False"
+                       Padding="0"
+                       HeightRequest="0">
+                    <StackLayout Orientation="Vertical"
+                                 Spacing="1"
+                                 IsClippedToBounds="True">
+                        <ContentViews:ImageEntryContentView Title="הקלד שוב את הסיסמה"
+                                                            Placeholder="הכנס סיסמה"
+                                                            Text="{Binding BindingContext.ConfirmPassword, Source={x:Reference page}, Mode=TwoWay}"
+                                                            IsVisible="{Binding BindingContext.IsFBSignUpMode, Source={x:Reference page},Converter={x:StaticResource NegateBooleanConverter}, Mode=TwoWay}"
+                                                            ImageSource="ic_password.png"
+                                                            IsRequired="True"
+                                                            IsPassword="True" />
+                        <ContentViews:ImageEntryContentView Title="שם משתמש"
+                                                            Placeholder="הכנס שם משתמש"
+                                                            IsRequired="True"
+                                                            Text="{Binding BindingContext.UserName, Source={x:Reference page}, Mode=TwoWay}"
+                                                            ImageSource="ic_user.png" />
+                        <ContentViews:ImageEntryContentView Title="מספר טלפון"
+                                                            Placeholder="הכנס מספר טלפון"
+                                                            Text="{Binding BindingContext.PhoneNumber, Source={x:Reference page}, Mode=TwoWay}"
+                                                            ImageSource="ic_phone_number.png"
+                                                            IsRequired="True"
+                                                            Keyboard="Numeric" />
+                        <ContentViews:ImageEntryContentView Title="עיר"
+                                                            Placeholder="הכנס עיר"
+                                                            PropertyChanged="ImageEntryContentView_PropertyChanged"
+                                                            Text="{Binding BindingContext.City, Source={x:Reference page}, Mode=TwoWay}"
+                                                            ImageSource="ic_city.png"
+                                                            IsRequired="True" />
+                        <ListView x:Name="CityPiker"
+                                  ItemsSource="{Binding Cities}"
+                                  HeightRequest="0"
+                                  IsVisible="False"
+                                  SelectedItem="{Binding SelectedCity ,Mode=TwoWay}"
+                                  ItemSelected="CityPiker_ItemSelected" />
+                        <ContentViews:ImageEntryContentView Title="שכונה"
+                                                            Placeholder="הכנס שכונה"
+                                                            Text="{Binding BindingContext.Neighborhood, Source={x:Reference page}, Mode=TwoWay}"
+                                                            ImageSource="ic_street.png" />
+                    </StackLayout>
+                </Frame>
+                <Label Text="{Binding Massage}"
+                       Style="{StaticResource orengeRedlabel}"
+                       HorizontalOptions="CenterAndExpand" />
+                <StackLayout VerticalOptions="FillAndExpand">
+                    <StackLayout FlowDirection="RightToLeft"
+                                 Orientation="Horizontal">
+                        <Label Text="{Binding LabelText}"
+                               FontSize="18"
+                               Style="{StaticResource label}" />
+                        <Button Text="{Binding SwitchFormButtonText}"
+                                Style="{StaticResource buttonLikeLabel}"
+                                Command="{Binding SwitchFormMode}" />
+                    </StackLayout>
+                    <Frame Padding="0"
+                           VerticalOptions="CenterAndExpand"
+                           HorizontalOptions="CenterAndExpand"
+                           CornerRadius="5">
+                        <Button Text="{Binding SubmitButtonText}"
+                                Command="{Binding Register}"
+                                Style="{StaticResource orangeRedButton}" />
+                    </Frame>
+                    <ActivityIndicator IsEnabled="{Binding IsBusy}"
+                                       IsRunning="{Binding IsBusy}"
+                                       IsVisible="{Binding IsBusy}"
+                                       Color="OrangeRed" />
+                    <Label Text="--התחבר באמצעות--"
+                           FontSize="Subtitle"
+                           Margin="0,30"
+                           VerticalOptions="CenterAndExpand"
+                           HorizontalOptions="CenterAndExpand"
+                           Style="{StaticResource label}" />
+                    <StackLayout Orientation="Horizontal"
+                                 Spacing="20"
+                                 Margin="0,0,0,20"
+                                 VerticalOptions="CenterAndExpand"
+                                 HorizontalOptions="Center">
+                        <Image Source="ic_facebook.png"
+                               Aspect="AspectFill">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding FacebookLogin}" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                        <Image Source="ic_twitter.png"
+                               Aspect="AspectFill" />
+                        <Image Source="ic_google.png"
+                               Aspect="AspectFill" />
+                    </StackLayout>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+        <Button Text="התנתק"
+                WidthRequest="200"
+                HeightRequest="60"
+                CornerRadius="10"
+                FontSize="Large"
+                RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.5, Constant=-100}"
+                RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0.5, Constant=-30}"
+                BackgroundColor="OrangeRed"
+                Command="{Binding Logout}"
+                IsVisible="{Binding IsUserLogin}" />
+    </RelativeLayout>
+</ContentPage>

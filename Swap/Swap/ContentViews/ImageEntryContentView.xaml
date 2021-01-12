@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:Converters="clr-namespace:Swap.Converters"
+             xmlns:CustomViews="clr-namespace:Swap.CustomViews"
+             x:Class="Swap.ContentViews.ImageEntryContentView"
+             x:Name="contentView">
+    <ContentView.Resources>
+        <ResourceDictionary>
+            <Converters:ImageSourceConverter x:Key="StringToImageSource" />
+            <Converters:KeyBoardConverter x:Key="StringToKeyboard" />
+        </ResourceDictionary>
+    </ContentView.Resources>
+    <ContentView.Content>
+        <StackLayout Margin="0"
+                     Padding="0"
+                     Spacing="0">
+            <StackLayout FlowDirection="RightToLeft"
+                         Orientation="Horizontal"
+                         Spacing="0">
+                <Label x:Name="title"
+                       Text="{Binding Title}"
+                       Style="{x:StaticResource label}" />
+                <Label x:Name="requiredLabel"
+                       Text="*"
+                       IsVisible="{Binding IsRequired}"
+                       Style="{x:StaticResource orengeRedlabel}"
+                       VerticalTextAlignment="Start" />
+            </StackLayout>
+            <Frame Style="{x:StaticResource frame}">
+                <StackLayout Orientation="Horizontal"
+                             Padding="0"
+                             FlowDirection="RightToLeft">
+                    <Image x:Name="icon"
+                           Source="{Binding ImageSource}" />
+                    <CustomViews:ErezCustomEntry x:Name="entry"
+                                                 Text="{Binding Text}"
+                                                 Placeholder="{Binding Placeholder}"
+                                                 IsPassword="{Binding IsPassword}"
+                                                 Keyboard="{Binding Keyboard, Converter={StaticResource StringToKeyboard}}"
+                                                 Style="{x:StaticResource entry}" />
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>

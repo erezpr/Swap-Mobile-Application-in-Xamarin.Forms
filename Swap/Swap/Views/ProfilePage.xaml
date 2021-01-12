@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage Title="פרופיל"
+             NavigationPage.HasNavigationBar="False"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ContentView="clr-namespace:Swap.ContentViews"
+             xmlns:ic="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin"
+             xmlns:converters="clr-namespace:Swap.Converters"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="Swap.Views.ProfilePage"
+             x:Name="page">
+    <ContentPage.Resources>
+        <converters:NegateBooleanConverter x:Key="NegateBooleanConverter" />
+    </ContentPage.Resources>
+    <RelativeLayout BackgroundColor="#f3f3f3">
+        <Image x:Name="topperBackgroundImage"
+               Source="profile_background_image.png"
+               Aspect="AspectFill"
+               RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+               RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0.25}" />
+        <Frame CornerRadius="100"
+               Padding="5"
+               RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToView, ElementName=topperBackgroundImage, Property=Height, Factor=1, Constant=-75}"
+               RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToView, ElementName=topperBackgroundImage, Property=Width, Factor=0.5, Constant=-75}">
+            <ic:CircleImage HeightRequest="150"
+                            WidthRequest="150"
+                            Aspect="AspectFill"
+                            Source="{Binding ImageSource}" />
+        </Frame>
+        <ImageButton Padding="0"
+                     IsVisible="{Binding IsUserLogin}"
+                     Clicked="EditProfilePictureButton_Clicked"
+                     Source="ic_edit_picture.png"
+                     RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.5 ,Constant=85}"
+                     RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToView ,ElementName=topperBackgroundImage, Property=Height ,Factor=1,Constant=-40}" />
+        <RelativeLayout x:Name="MainConteiner"
+                        RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0.75}"
+                        RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToView ,ElementName=topperBackgroundImage, Property=Height ,Factor=1}">
+            <RelativeLayout IsVisible="{Binding IsUserLogin}">
+                <ScrollView x:Name="detailsConteiner"
+                            Padding="0,85,0,0"
+                            RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+                            RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1}">
+                    <RelativeLayout RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}">
+                        <Label x:Name="userName"
+                               Text="{Binding UserName}"
+                               RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+                               TextColor="#333333"
+                               HorizontalTextAlignment="Center"
+                               FontAttributes="Bold"
+                               FontSize="30" />
+                        <StackLayout x:Name="editProfileSL"
+                                     Orientation="Horizontal"
+                                     WidthRequest="150"
+                                     Spacing="4"
+                                     RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+                                     RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.5 ,Constant=-60}"
+                                     RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToView, ElementName=userName, Property=Y, Factor=1,Constant=50}">
+                            <Label  Text="ערוך פרופיל"
+                                    FontSize="16"
+                                    FontAttributes="Bold"
+                                    TextDecorations="Underline"
+                                    VerticalOptions="End"
+                                    TextColor="OrangeRed">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SwitchMode}" />
+                                </Label.GestureRecognizers>
+                            </Label>
+                            <Image Source="ic_edit.png"
+                                   Aspect="AspectFill">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding SwitchMode}" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                        </StackLayout>
+                        <StackLayout Margin="20,0"
+                                     RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToView, ElementName=editProfileSL, Property=Y, Factor=1,Constant=50}"
+                                     RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+                                     Spacing="0">
+                            <ContentView:InfoContentView Title="אימייל"
+                                                         ImageSource="ic_email.png"
+                                                         Text="{Binding BindingContext.Email, Source={x:Reference page}}" />
+                            <ContentView:InfoContentView Title="כתובת"
+                                                         ImageSource="ic_address.png"
+                                                         Text="{Binding BindingContext.Address, Source={x:Reference page}}" />
+                            <ContentView:InfoContentView Title="מספר טלפון"
+                                                         ImageSource="ic_phone.png"
+                                                         Text="{Binding BindingContext.PhoneNumber, Source={x:Reference page}}" />
+                        </StackLayout>
+                    </RelativeLayout>
+                </ScrollView>
+                <ScrollView x:Name="editConteiner"
+                            Padding="0,85,0,0"
+                            IsVisible="False"
+                            RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+                            RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1}">
+                    <RelativeLayout RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}">
+                        <Label Text="עריכת פרופיל"
+                               RelativeLayout.YConstraint="{ConstraintExpression Type=Constant,Constant=10}"
+                               RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+                               FontSize="26"
+                               FontAttributes="Bold"
+                               HorizontalTextAlignment="Center"
+                               TextColor="OrangeRed" />
+                        <StackLayout x:Name="editStackLayout"
+                                     Margin="20,0"
+                                     RelativeLayout.YConstraint="{ConstraintExpression Type=Constant, Constant=65}"
+                                     RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+                                     Spacing="0">
+                            <ContentView:ImageEntryContentView Title="שם משתמש"
+                                                               Placeholder="הכנס שם משתשמש"
+                                                               ImageSource="ic_user.png"
+                                                               Text="{Binding BindingContext.UserName, Source={x:Reference page},Mode=TwoWay}" />
+                            <ContentView:ImageEntryContentView Title="מספר טלפון"
+                                                               Placeholder="הכנס מספר טלפון"
+                                                               ImageSource="ic_phone.png"
+                                                               Keyboard="Numeric"
+                                                               Text="{Binding BindingContext.PhoneNumber, Source={x:Reference page},Mode=TwoWay}" />
+                            <ContentView:ImageEntryContentView Title="עיר"
+                                                               Placeholder="הכנס עיר"
+                                                               ImageSource="ic_city.png"
+                                                               Text="{Binding BindingContext.City, Source={x:Reference page},Mode=TwoWay}" />
+                            <ContentView:ImageEntryContentView Title="שכונה"
+                                                               Placeholder="הכנס שכונה"
+                                                               ImageSource="ic_street.png"
+                                                               Text="{Binding BindingContext.Neighborhood, Source={x:Reference page},Mode=TwoWay}" />
+                            <Label Text="{Binding Message}"
+                                   TextColor="OrangeRed"
+                                   FontSize="16"
+                                   FontAttributes="Bold" />
+                        </StackLayout>
+                        <Button Text="שמור שינויים"
+                                BackgroundColor="OrangeRed"
+                                WidthRequest="120"
+                                HeightRequest="45"
+                                CornerRadius="5"
+                                FontAttributes="Bold"
+                                RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToView,ElementName=editStackLayout, Property=Height, Factor=1,Constant=80}"
+                                RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.5,Constant=-60}"
+                                Command="{Binding UpdateUserProfile}" />
+                        <Button Text="ביטול"
+                                WidthRequest="120"
+                                HeightRequest="45"
+                                CornerRadius="5"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                Margin="0,0,0,15"
+                                RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToView,ElementName=editStackLayout, Property=Height, Factor=1,Constant=145}"
+                                RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.5,Constant=-60}"
+                                BackgroundColor="Gray"
+                                Command="{Binding Cancel}" />
+                    </RelativeLayout>
+                </ScrollView>
+            </RelativeLayout>
+            <RelativeLayout x:Name="UserIsNotLoginConteiner"
+                            IsVisible="{Binding IsUserLogin, Converter={StaticResource NegateBooleanConverter}}"
+                            RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1}"
+                            RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}">
+                <Label Text="אינך מחובר למערכת"
+                       FontSize="20"
+                       HorizontalTextAlignment="Center"
+                       RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+                       RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0.5, Constant=-130}"
+                       FontAttributes="Bold" />
+                <Frame Padding="0"
+                       RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.5, Constant=-100}"
+                       RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=0.5, Constant=-30}"
+                       CornerRadius="5">
+                    <Button Text="לחץ כאן כדי להתחבר"
+                            TextColor="White"
+                            FontSize="16"
+                            FontAttributes="Bold"
+                            WidthRequest="200"
+                            HeightRequest="60"
+                            CornerRadius="5"
+                            BackgroundColor="OrangeRed"
+                            Command="{Binding PushRegiterPage}" />
+                </Frame>
+            </RelativeLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+</ContentPage>

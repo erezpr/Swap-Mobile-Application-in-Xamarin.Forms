@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Swap.Views.MyItemsPage"
+             BackgroundColor="White">
+    <StackLayout HorizontalOptions="Fill"
+                 VerticalOptions="Fill"
+                 Spacing="0">
+        <ScrollView Padding="0,15"
+                    Orientation="Vertical">
+            <StackLayout Orientation="Vertical"
+                         Spacing="15">
+                <Button x:Name="addItemButton"
+                        HorizontalOptions="Center"
+                        VerticalOptions="Center"
+                        ImageSource="add_item.png"
+                        Clicked="addItem_Button_Clicked"
+                        BackgroundColor="White" />
+                <StackLayout Spacing="0">
+                    <StackLayout Orientation="Horizontal">
+                        <Button Text="הצג הכל"
+                                FontSize="Small"
+                                BackgroundColor="White"
+                                TextColor="DarkOrange"
+                                FontAttributes="Bold"
+                                Clicked="viewAllBookItems_Button_Clicked"
+                                HorizontalOptions="Start" />
+                        <Label HorizontalOptions="EndAndExpand"
+                               VerticalOptions="EndAndExpand"
+                               Text="הספרים שלי"
+                               FontSize="Medium"
+                               FontAttributes="Bold" />
+                    </StackLayout>
+                    <ScrollView Orientation="Horizontal"
+                                HorizontalScrollBarVisibility="Never"
+                                FlowDirection="RightToLeft">
+                        <Frame  BorderColor="WhiteSmoke">
+                            <StackLayout x:Name="myBooksSL"
+                                         HeightRequest="200"
+                                         Orientation="Horizontal" />
+                        </Frame>
+                    </ScrollView>
+                </StackLayout>
+                <StackLayout Spacing="0">
+                    <StackLayout Orientation="Horizontal">
+                        <Button Text="הצג הכל"
+                                TextColor="DarkOrange"
+                                BackgroundColor="White"
+                                FontSize="Small"
+                                FontAttributes="Bold"
+                                Clicked="viewAllVideoGameItems_Button_Clicked"
+                                HorizontalOptions="Start" />
+                        <Label  HorizontalOptions="EndAndExpand"
+                                VerticalOptions="EndAndExpand"
+                                Text="המשחקים שלי"
+                                FontSize="Medium"
+                                FontAttributes="Bold" />
+                    </StackLayout>
+                    <ScrollView Orientation="Horizontal"
+                                HorizontalScrollBarVisibility="Never"
+                                FlowDirection="RightToLeft">
+                        <Frame BorderColor="WhiteSmoke">
+                            <StackLayout x:Name="myVideoGamesSL"
+                                         HeightRequest="200"
+                                         Orientation="Horizontal" />
+                        </Frame>
+                    </ScrollView>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+    </StackLayout>
+</ContentPage>

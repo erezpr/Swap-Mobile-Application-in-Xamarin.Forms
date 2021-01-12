@@ -1,0 +1,180 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Shell xmlns="http://xamarin.com/schemas/2014/forms"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:views="clr-namespace:Swap.Views"
+       FlyoutBackgroundImage="shell_items_background.jpg"
+       FlyoutBackgroundImageAspect="AspectFill"
+       x:Class="Swap.AppShell"
+       x:Name="shell">
+    <Shell.Resources>
+        <Style x:Key="BaseStyle"
+               TargetType="Element">
+            <Setter Property="Shell.BackgroundColor"
+                    Value="#455A64" />
+            <Setter Property="Shell.ForegroundColor"
+                    Value="White" />
+            <Setter Property="Shell.TitleColor"
+                    Value="White" />
+            <Setter Property="Shell.DisabledColor"
+                    Value="#B4FFFFFF" />
+            <Setter Property="Shell.UnselectedColor"
+                    Value="#95FFFFFF" />
+        </Style>
+        <Style TargetType="ShellItem"
+               BasedOn="{StaticResource BaseStyle}" />
+        <Style x:Key="DomesticShell"
+               TargetType="Element"
+               BasedOn="{StaticResource BaseStyle}">
+            <Setter Property="Shell.BackgroundColor"
+                    Value="#039BE6" />
+        </Style>
+        <Style x:Key="MonkeysShell"
+               TargetType="Element"
+               BasedOn="{StaticResource BaseStyle}">
+            <Setter Property="Shell.BackgroundColor"
+                    Value="#689F39" />
+        </Style>
+        <Style x:Key="ElephantsShell"
+               TargetType="Element"
+               BasedOn="{StaticResource BaseStyle}">
+            <Setter Property="Shell.BackgroundColor"
+                    Value="#ED3B3B" />
+        </Style>
+        <Style x:Key="BearsShell"
+               TargetType="Element"
+               BasedOn="{StaticResource BaseStyle}">
+            <Setter Property="Shell.BackgroundColor"
+                    Value="#546DFE" />
+        </Style>
+        <Style x:Key="AboutShell"
+               TargetType="Element"
+               BasedOn="{StaticResource BaseStyle}">
+            <Setter Property="Shell.BackgroundColor"
+                    Value="#536976" />
+        </Style>
+    </Shell.Resources>
+    <Shell.FlyoutHeaderTemplate>
+        <DataTemplate>
+            <Grid RowSpacing="2"
+                  Margin="0"
+                  Padding="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.7*" />
+                    <RowDefinition Height="0.3*" />
+                </Grid.RowDefinitions>
+                <Image Aspect="Fill"
+                       Grid.RowSpan="2"
+                       Source="shellBackground.jpg" />
+                <Image Source="ic_profile_avatar.png"
+                       HeightRequest="100"
+                       WidthRequest="100"
+                       Margin="0,20,12,0"
+                       HorizontalOptions="End"
+                       VerticalOptions="End"
+                       Aspect="AspectFit" />
+                <Label Grid.Row="1"
+                       Text="{Binding BindingContext.UserName, Source={x:Reference shell}}"
+                       FontSize="18"
+                       Margin="15,0"
+                       FontAttributes="Bold"
+                       TextColor="White"
+                       HorizontalTextAlignment="Start"
+                       VerticalTextAlignment="Center" />
+            </Grid>
+        </DataTemplate>
+    </Shell.FlyoutHeaderTemplate>
+    <Shell.ItemTemplate>
+        <DataTemplate>
+            <Grid RowSpacing="0"
+                  Margin="0"
+                  Padding="15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.85*" />
+                    <ColumnDefinition Width="0.15*" />
+                </Grid.ColumnDefinitions>
+                <Image Source="{Binding Icon}"
+                       Grid.Column="1"
+                       HeightRequest="30"
+                       HorizontalOptions="End" />
+                <Label FontSize="Large"
+                       FontAttributes="Bold"
+                       TextColor="#333333"
+                       Text="{Binding Title}"
+                       VerticalTextAlignment="Center" />
+            </Grid>
+        </DataTemplate>
+    </Shell.ItemTemplate>
+    <Shell.MenuItemTemplate>
+        <DataTemplate>
+            <Grid RowSpacing="0"
+                  Margin="0"
+                  Padding="15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.85*" />
+                    <ColumnDefinition Width="0.15*" />
+                </Grid.ColumnDefinitions>
+                <Image Source="{Binding Icon}"
+                       Grid.Column="1"
+                       HeightRequest="30"
+                       HorizontalOptions="End" />
+                <Label FontSize="16"
+                       Text="{Binding Title}"
+                       VerticalTextAlignment="Center" />
+            </Grid>
+        </DataTemplate>
+    </Shell.MenuItemTemplate>
+    <FlyoutItem x:Name="home"
+                Route="mainPage"
+                Title="דף ראשי"
+                Icon="home.png"
+                FlyoutDisplayOptions="AsSingleItem">
+        <Tab Route="home"
+             Title="דף הבית"
+             Icon="home.png"
+             Style="{StaticResource BearsShell}">
+            <ShellContent ContentTemplate="{DataTemplate views:HomePage}" />
+        </Tab>
+        <Tab Route="myItems"
+             Title="הפריטים שלי"
+             Icon="add_item.png"
+             Style="{StaticResource ElephantsShell}">
+            <ShellContent ContentTemplate="{DataTemplate views:MyItemsPage}" />
+        </Tab>
+        <Tab Route="search"
+             Title="חיפוש"
+             Icon="ic_search.png"
+             Style="{StaticResource DomesticShell}">
+            <ShellContent ContentTemplate="{DataTemplate views:SearchPage}" />
+        </Tab>
+    </FlyoutItem>
+    <FlyoutItem Route="messages"
+                Title="פרופיל"
+                Icon="profile.png"
+                Style="{StaticResource DomesticShell}">
+        <Tab>
+            <ShellContent ContentTemplate="{DataTemplate views:ProfilePage}" />
+        </Tab>
+    </FlyoutItem>
+    <FlyoutItem Route="notification"
+                Title="התראות"
+                Icon="notification.png">
+        <Tab Style="{StaticResource DomesticShell}">
+            <ShellContent ContentTemplate="{DataTemplate views:NotificationPage}" />
+        </Tab>
+    </FlyoutItem>
+    <FlyoutItem Route="messages"
+                Title="הודעות"
+                Icon="message.png">
+        <Tab>
+            <ShellContent ContentTemplate="{DataTemplate views:MainChatPage}" />
+        </Tab>
+    </FlyoutItem>
+    <FlyoutItem Route="register"
+                Title="התחברות/הרשמה"
+                Icon="login.png"
+                Style="{StaticResource AboutShell}">
+        <Tab>
+            <ShellContent ContentTemplate="{DataTemplate views:RegisterPage}" />
+        </Tab>
+    </FlyoutItem>
+</Shell>

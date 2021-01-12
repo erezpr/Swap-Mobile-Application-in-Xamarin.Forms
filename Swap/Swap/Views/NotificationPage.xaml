@@ -1,0 +1,230 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage Title="דף התראות"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:converters="clr-namespace:Swap.Converters"
+             xmlns:CustomViews="clr-namespace:Swap.CustomViews"
+             xmlns:pancakeView="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             mc:Ignorable="d"
+             x:Class="Swap.Views.NotificationPage"
+             x:Name="page">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:MenuFitWidthConverter x:Key="MenuFitWidthConverter" />
+            <converters:TradeStatusToBooleanConverter x:Key="TradeStatusToBooleanConverter" />
+            <converters:TradeStatusToColorConverter x:Key="TradeStatusToColorConverter" />
+            <converters:TradeStatusToMessageConverter x:Key="TradeStatusToMessageConverter" />
+            <converters:NegateBooleanConverter x:Key="NegateBooleanConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <pancakeView:PancakeView BackgroundGradientStartColor="#800080"
+                             BackgroundGradientEndColor="#ffc0cb">
+        <StackLayout IsEnabled="{Binding IsBusy,Converter={StaticResource NegateBooleanConverter}}">
+            <StackLayout BackgroundColor="#039BE6"
+                         Padding="5,0"
+                         Spacing="0"
+                         Orientation="Horizontal"
+                         FlowDirection="RightToLeft">
+                <Frame x:Name="receivedButtonFrame"
+                       Padding="0,0,0,3"
+                       HasShadow="False"
+                       BackgroundColor="Red">
+                    <Button x:Name="receivedButton"
+                            Text="הצעות שהתקבלו"
+                            FontAttributes="Bold"
+                            BackgroundColor="#039BE6"
+                            WidthRequest="140"
+                            TextColor="White"
+                            Command="{Binding SetReceivedMode}" />
+                </Frame>
+                <Frame x:Name="sentButtonFrame"
+                       Padding="0,0,0,3"
+                       HasShadow="False"
+                       BackgroundColor="#039BE6">
+                    <Button x:Name="sentButton"
+                            Text="הצעות שנשלחו"
+                            WidthRequest="140"
+                            BackgroundColor="#039BE6"
+                            TextColor="White"
+                            Command="{Binding SetSentMode}"
+                            VerticalOptions="CenterAndExpand" />
+                </Frame>
+            </StackLayout>
+            <ListView x:Name="receivedNotifications"
+                      HasUnevenRows="True"
+                      IsPullToRefreshEnabled="True"
+                      BackgroundColor="Transparent"
+                      ItemsSource="{Binding ReceivedNotificationList}"
+                      RefreshCommand="{Binding RefreshCommand}"
+                      IsRefreshing="{Binding IsRefreshing}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame BackgroundColor="LightSkyBlue"
+                                   Margin="20,5"
+                                   Padding="15,8"
+                                   WidthRequest="{Binding Source={x:Reference page}, Path=Width, Converter={StaticResource MenuFitWidthConverter}, ConverterParameter='70'}"
+                                   CornerRadius="8">
+                                <StackLayout FlowDirection="RightToLeft"
+                                             Orientation="Horizontal"
+                                             HorizontalOptions="FillAndExpand"
+                                             Spacing="10">
+                                    <StackLayout>
+                                        <Button d:Text="ההצעה נדחתה"
+                                                Text="{Binding Status,Converter={StaticResource TradeStatusToMessageConverter}}"
+                                                TextColor="Black"
+                                                Padding="2"
+                                                VerticalOptions="Start"
+                                                IsEnabled="False"
+                                                HorizontalOptions="Start"
+                                                HeightRequest="25"
+                                                CornerRadius="10"
+                                                BackgroundColor="{Binding Status,Converter={StaticResource TradeStatusToColorConverter}}" />
+                                        <Image Aspect="AspectFill"
+                                               HeightRequest="100"
+                                               WidthRequest="100"
+                                               VerticalOptions="EndAndExpand"
+                                               Source="{Binding ImageUrl}"
+                                               d:Source="noimage" />
+                                    </StackLayout>
+                                    <StackLayout VerticalOptions="CenterAndExpand"
+                                                 HorizontalOptions="FillAndExpand"
+                                                 Spacing="12">
+                                        <Label Text="{Binding User.FirstName ,StringFormat='{0} התעניין בספר שברשותך'}"
+                                               FontSize="18"
+                                               FontAttributes="Bold"
+                                               LineBreakMode="TailTruncation"
+                                               MaxLines="2"
+                                               TextColor="White"
+                                               d:Text="{Binding StringFormat='{0} התעניין בספר שברשותך'}" />
+                                        <StackLayout>
+                                            <Button Text="{Binding User.FirstName,StringFormat='לצפיה בפריטים של {0}'}"
+                                                    Command="{Binding BindingContext.ShowCustomerItems, Source={x:Reference page}}"
+                                                    CommandParameter="{Binding .}"
+                                                    Padding="5"
+                                                    FontSize="14"
+                                                    HeightRequest="30"
+                                                    WidthRequest="110"
+                                                    CornerRadius="8"
+                                                    BackgroundColor="LightGreen"
+                                                    d:Text="{Binding StringFormat='לצפיה בפריטים של {0}'}" />
+                                            <Button Text="{Binding User.FirstName ,StringFormat='לצפיה בפריטים ש{0} מציע לך'}"
+                                                    IsVisible="{Binding Status ,Converter={StaticResource TradeStatusToBooleanConverter}, ConverterParameter='false'}"
+                                                    Command="{Binding BindingContext.ShowOfferedList, Source={x:Reference page}}"
+                                                    CommandParameter="{Binding .}"
+                                                    Padding="5"
+                                                    FontSize="14"
+                                                    HeightRequest="30"
+                                                    WidthRequest="110"
+                                                    CornerRadius="8"
+                                                    BackgroundColor="Salmon"
+                                                    d:Text="{Binding StringFormat='לצפיה בפריטים ש{0} מציע לך'}" />
+                                            <Button Text="לפרטים"
+                                                    Command="{Binding BindingContext.ShowTradeDetailsPage, Source={x:Reference page}}"
+                                                    CommandParameter="{Binding .}"
+                                                    IsVisible="{Binding Status ,Converter={StaticResource TradeStatusToBooleanConverter},ConverterParameter='true'}"
+                                                    Padding="5"
+                                                    FontSize="14"
+                                                    HeightRequest="30"
+                                                    WidthRequest="110"
+                                                    CornerRadius="8"
+                                                    BackgroundColor="OrangeRed" />
+                                            <Button Text="שלח הודעה"
+                                                    Command="{Binding BindingContext.ShowChatPage, Source={x:Reference page}}"
+                                                    CommandParameter="{Binding .}"
+                                                    Padding="0"
+                                                    FontSize="12"
+                                                    HeightRequest="30"
+                                                    WidthRequest="110"
+                                                    BackgroundColor="LightCoral" />
+                                        </StackLayout>
+                                    </StackLayout>
+                                </StackLayout>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <ListView x:Name="sentNotifications"
+                      IsVisible="False"
+                      HasUnevenRows="True"
+                      IsPullToRefreshEnabled="True"
+                      BackgroundColor="Transparent"
+                      RefreshCommand="{Binding RefreshCommand}"
+                      IsRefreshing="{Binding IsRefreshing}"
+                      ItemsSource="{Binding SentNotificationList}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame BackgroundColor="LightSkyBlue"
+                                   Margin="20,5"
+                                   Padding="15,8"
+                                   WidthRequest="{Binding Source={x:Reference page}, Path=Width, Converter={StaticResource MenuFitWidthConverter}, ConverterParameter='70'}"
+                                   CornerRadius="8">
+                                <StackLayout FlowDirection="RightToLeft"
+                                             Orientation="Horizontal"
+                                             Spacing="10">
+                                    <Frame HeightRequest="110"
+                                           WidthRequest="110"
+                                           CornerRadius="5"
+                                           Padding="0"
+                                           IsClippedToBounds="true">
+                                        <ffimageloading:CachedImage LoadingPlaceholder="LoaderImage"
+                                                                    ErrorPlaceholder="ErrorImage"
+                                                                    CacheDuration="50"
+                                                                    RetryCount="3"
+                                                                    RetryDelay="600"
+                                                                    Source="{Binding ImageUrl}"
+                                                                    Aspect="Fill">
+                                            <ffimageloading:CachedImage.CacheKeyFactory>
+                                                <CustomViews:CustomCacheKeyFactory />
+                                            </ffimageloading:CachedImage.CacheKeyFactory>
+                                        </ffimageloading:CachedImage>
+                                    </Frame>
+                                    <StackLayout VerticalOptions="CenterAndExpand"
+                                                 HorizontalOptions="CenterAndExpand"
+                                                 Spacing="12">
+                                        <Button d:Text="ההצעה נדחתה"
+                                                Text="{Binding Status,Converter={StaticResource TradeStatusToMessageConverter}}"
+                                                Padding="2"
+                                                HorizontalOptions="Start"
+                                                HeightRequest="25"
+                                                CornerRadius="10"
+                                                IsEnabled="False"
+                                                BackgroundColor="{Binding Status,Converter={StaticResource TradeStatusToColorConverter}}" />
+                                        <Label Text="{Binding User.FirstName, StringFormat='הבקשה נשלחה אל {0}'}"
+                                               d:Text="{Binding StringFormat='הבקשה נשלחה אל {0}'}"
+                                               FontSize="Medium"
+                                               FontAttributes="Bold"
+                                               MaxLines="3"
+                                               TextColor="White" />
+                                        <Label Text="{Binding Item.Name, StringFormat='שם הפריט {0}'}"
+                                               d:Text="{Binding StringFormat='שם הפריט {0}'}"
+                                               FontSize="Medium"
+                                               FontAttributes="Bold"
+                                               TextColor="White" />
+                                    </StackLayout>
+                                    <Button Text="לפרטים"
+                                            HorizontalOptions="Center"
+                                            VerticalOptions="Center"
+                                            Padding="0"
+                                            FontSize="Subtitle"
+                                            CornerRadius="8"
+                                            FontAttributes="Bold"
+                                            HeightRequest="35"
+                                            WidthRequest="80"
+                                            BackgroundColor="Salmon"
+                                            Command="{Binding BindingContext.ShowTradeDetailsPage , Source={x:Reference page}}"
+                                            CommandParameter="{Binding .}" />
+                                </StackLayout>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </pancakeView:PancakeView>
+</ContentPage>

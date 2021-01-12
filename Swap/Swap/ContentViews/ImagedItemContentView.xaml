@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ffImage="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="Swap.ContentViews.ImagedItemContentView">
+    <ContentView.GestureRecognizers>
+        <TapGestureRecognizer Command="{Binding ShowItemDetailsCommand} "
+                              CommandParameter="{Binding Item}" />
+    </ContentView.GestureRecognizers>
+    <Frame Padding="8"
+           CornerRadius="10"
+           BackgroundColor="AntiqueWhite">
+        <StackLayout>
+            <Frame x:Name="imageFrame"
+                   Padding="0"
+                   WidthRequest="125"
+                   CornerRadius="10"
+                   HeightRequest="125">
+                <ffImage:CachedImage x:Name="image"
+                                     Source="{Binding ImageSource}"
+                                     CacheType="Memory"
+                                     FadeAnimationForCachedImages="True"
+                                     LoadingPriority="High"
+                                     WidthRequest="125"
+                                     HeightRequest="125"
+                                     Aspect="Fill" />
+            </Frame>
+            <Label x:Name="upadateTime"
+                   Text="{Binding UploadDate}"
+                   d:Text="10/10/10"
+                   HorizontalTextAlignment="Center"
+                   FontSize="14"
+                   TextColor="#555555" />
+            <Label x:Name="itemName"
+                   MaxLines="2"
+                   LineBreakMode="TailTruncation"
+                   MinimumHeightRequest="25"
+                   Text="{Binding ItemName}"
+                   d:Text="הארי פוטר"
+                   FontSize="16"
+                   WidthRequest="110"
+                   FontAttributes="Bold"
+                   TextColor="#333333" />
+            <Label FontSize="16"
+                   VerticalTextAlignment="Center"
+                   FontAttributes="Bold">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="גאנר: "
+                              TextColor="DarkOrange" />
+                        <Span Text="{Binding Genre}"
+                              d:Text="פעולה"
+                              TextColor="#333333" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+        </StackLayout>
+    </Frame>
+</ContentView>    

@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Swap.ContentViews.InfoContentView">
+    <ContentView.Content>
+        <StackLayout Margin="0"
+                     Padding="0"
+                     Spacing="0">
+            <StackLayout FlowDirection="RightToLeft"
+                         Orientation="Horizontal">
+                <Label Text="{Binding Title}"
+                       Style="{x:StaticResource label}" />
+            </StackLayout>
+            <Frame Style="{x:StaticResource frame}">
+                <StackLayout Orientation="Horizontal"
+                             FlowDirection="RightToLeft">
+                    <Image Source="{Binding ImageSource}" />
+                    <Label Text="{Binding Text}"
+                           HorizontalTextAlignment="Center"
+                           VerticalTextAlignment="Center"
+                           TextColor="Black"
+                           FontSize="16" />
+                </StackLayout>
+            </Frame>
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>

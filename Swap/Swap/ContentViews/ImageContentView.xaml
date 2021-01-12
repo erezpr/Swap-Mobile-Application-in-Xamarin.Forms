@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Swap.ContentViews.ImageContentView"
+             xmlns:CustomViews="clr-namespace:Swap.CustomViews"
+             xmlns:ffimageloading="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             HorizontalOptions="FillAndExpand"
+             VerticalOptions="FillAndExpand">
+    <ffimageloading:CachedImage LoadingPlaceholder="spinner.gif"
+                                ErrorPlaceholder="ErrorImage"
+                                CacheDuration="50"
+                                RetryCount="3"
+                                RetryDelay="600"
+                                Source="{Binding ImageSource}"
+                                Aspect="AspectFit">
+        <ffimageloading:CachedImage.CacheKeyFactory>
+            <CustomViews:CustomCacheKeyFactory />
+        </ffimageloading:CachedImage.CacheKeyFactory>
+    </ffimageloading:CachedImage>
+</ContentView>

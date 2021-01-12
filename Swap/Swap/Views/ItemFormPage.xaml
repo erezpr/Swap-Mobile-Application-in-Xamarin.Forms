@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:CustomViews="clr-namespace:Swap.CustomViews"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             mc:Ignorable="d"
+             x:Class="Swap.Views.ItemFormPage">
+    <ScrollView>
+        <StackLayout>
+            <StackLayout x:Name="mainStackLayout">
+                <Frame>
+                    <StackLayout>
+                        <Label Text="שם פריט(*) "
+                               FontAttributes="Bold"
+                               FontSize="16" />
+                        <CustomViews:CustomEntry x:Name="ItemName"
+                                                 HeightRequest="45"
+                                                 HorizontalOptions="Fill"
+                                                 VerticalOptions="Center"
+                                                 FontSize="Small" />
+                    </StackLayout>
+                </Frame>
+                <Frame>
+                    <StackLayout>
+                        <Label Text="מצב (*)"
+                               FontAttributes="Bold"
+                               FontSize="16" />
+                        <CustomViews:CustomPicker x:Name="statePicker"
+                                                  HeightRequest="45"
+                                                  HorizontalOptions="Fill"
+                                                  VerticalOptions="Center"
+                                                  FontSize="Small" />
+                    </StackLayout>
+                </Frame>
+                <StackLayout Orientation="Horizontal"
+                             Padding="10,0,10,0"
+                             Spacing="30"
+                             HorizontalOptions="Center"
+                             VerticalOptions="EndAndExpand">
+                    <Button Text="צרף תמונה"
+                            Clicked="pickPhoto_Button_Clicked" />
+                    <Button Text="צלם תמונה"
+                            Clicked="takePhoto_Button_Clicked" />
+                </StackLayout>
+                <StackLayout Spacing="15">
+                    <Label Text="תמונות"
+                           Margin="15,0"
+                           FontAttributes="Bold"
+                           FontSize="16" />
+                    <ScrollView  Orientation="Horizontal"
+                                 HorizontalScrollBarVisibility="Never"
+                                 FlowDirection="RightToLeft"
+                                 VerticalOptions="EndAndExpand">
+                        <Frame  HeightRequest="180">
+                            <StackLayout x:Name="myImagesStackLayout"
+                                         Orientation="Horizontal"
+                                         Spacing="20" />
+                        </Frame>
+                    </ScrollView>
+                </StackLayout>
+                <Frame>
+                    <StackLayout>
+                        <StackLayout Orientation="Horizontal"
+                                     FlowDirection="LeftToRight">
+                            <Label HorizontalOptions="StartAndExpand"
+                                   x:Name="videoGameLable"
+                                   d:IsVisible="False"
+                                   IsVisible="False"
+                                   TextColor="Brown"
+                                   Text="משחק וידאו"
+                                   FontAttributes="Bold"
+                                   FontSize="16" />
+                            <Label x:Name="BookLable"
+                                   HorizontalOptions="StartAndExpand"
+                                   IsVisible="False"
+                                   TextColor="BlueViolet"
+                                   Text="ספר"
+                                   FontAttributes="Bold"
+                                   FontSize="16" />
+                            <Label Text="סוג (*)"
+                                   HorizontalOptions="EndAndExpand"
+                                   FontAttributes="Bold"
+                                   FontSize="16" />
+                        </StackLayout>
+                        <CustomViews:CustomPicker x:Name="typePicker"
+                                                  HeightRequest="45"
+                                                  HorizontalOptions="Fill"
+                                                  VerticalOptions="Center"
+                                                  FontSize="Small"
+                                                  SelectedIndexChanged="TypeOfItemPicker_SelectedIndexChanged" />
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

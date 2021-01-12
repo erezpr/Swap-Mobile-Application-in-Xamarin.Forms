@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:CustomViews="clr-namespace:Swap.CustomViews"
+             x:Class="Swap.Views.SearchPage">
+    <StackLayout x:Name="pageStackLayout"
+                 HorizontalOptions="Fill"
+                 VerticalOptions="Fill">
+        <ScrollView FlowDirection="RightToLeft">
+            <StackLayout x:Name="mainStackLayout">
+                <Frame CornerRadius="30" FlowDirection="LeftToRight">
+                    <StackLayout Spacing="10">
+                        <Label Text="סריקה לפי מיקום"
+                               WidthRequest="200"
+                               HeightRequest="60"
+                               HorizontalOptions="Center"
+                               FontSize="20"
+                               FontAttributes="Bold" />
+                        <StackLayout Orientation="Horizontal"
+                                     HorizontalOptions="End"
+                                     Spacing="30">
+                            <Label Text="לפי רדיוס (בקילומטרים)"
+                                   FontSize="16" />
+                            <Switch x:Name="radiusSwitch"
+                                    IsToggled="False"
+                                    Toggled="radius_Switch_Toggled_" />
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal"
+                                     HorizontalOptions="CenterAndExpand"
+                                     Spacing="30">
+                            <Slider  Maximum="200"
+                                     Minimum="1"
+                                     Value="10"
+                                     x:Name="RadiusSlider"
+                                     WidthRequest="300"
+                                     IsVisible="{Binding Source={x:Reference radiusSwitch},Path=IsToggled}" />
+                            <Label Text="{Binding Source={x:Reference RadiusSlider}, Path=Value,StringFormat='{0:N0}'}"
+                                   FontSize="16"
+                                   IsVisible="{Binding Source={x:Reference radiusSwitch},Path=IsToggled}" />
+                        </StackLayout>
+                        <StackLayout Orientation="Horizontal"
+                                     HorizontalOptions="End"
+                                     Spacing="30">
+                            <Label Text="לפי עיר"
+                                   FontSize="16" />
+                            <Switch x:Name="citySwitch"
+                                    IsToggled="False"
+                                    Toggled="city_Switch_Toggled_" />
+                        </StackLayout>
+                        <StackLayout>
+                            <CustomViews:CustomEntry x:Name="cityEntry"
+                                                     HeightRequest="45"
+                                                     FontSize="Small"
+                                                     WidthRequest="150"
+                                                     IsVisible="{Binding Source={x:Reference citySwitch},Path=IsToggled}" />
+                        </StackLayout>
+                    </StackLayout>
+                </Frame>
+                <Frame>
+                    <StackLayout>
+                        <Label Text="שם פריט "
+                               FontAttributes="Bold"
+                               FontSize="16" />
+                        <CustomViews:CustomEntry x:Name="ItemName"
+                                                 HeightRequest="45"
+                                                 HorizontalOptions="Fill"
+                                                 VerticalOptions="Center"
+                                                 FontSize="Small" />
+                    </StackLayout>
+                </Frame>
+                <Frame>
+                    <StackLayout>
+                        <Label Text="מצב "
+                               FontAttributes="Bold"
+                               FontSize="16" />
+                        <CustomViews:CustomPicker x:Name="statePicker"
+                                                  HeightRequest="45"
+                                                  HorizontalOptions="Fill"
+                                                  VerticalOptions="Center"
+                                                  FontSize="Small" />
+                    </StackLayout>
+                </Frame>
+                <Frame>
+                    <StackLayout>
+                        <Label Text="סוג "
+                               FontAttributes="Bold"
+                               FontSize="16" />
+                        <CustomViews:CustomPicker x:Name="typePicker"
+                                                  HeightRequest="45"
+                                                  HorizontalOptions="Fill"
+                                                  VerticalOptions="Center"
+                                                  FontSize="Small"
+                                                  SelectedIndexChanged="TypeOfItemPicker_SelectedIndexChanged" />
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+        </ScrollView>
+        <Button Text="חפש"
+                HorizontalOptions="Center"
+                BorderColor="Black"
+                CornerRadius="20"
+                WidthRequest="100"
+                HeightRequest="40"
+                FontAttributes="Bold"
+                BackgroundColor="DarkOrange"
+                Clicked="search_Button_Clicked" />
+    </StackLayout>
+</ContentPage>

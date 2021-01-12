@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage Title="פרטי העסקה"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:pancakeView="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             mc:Ignorable="d"
+             x:Class="Swap.Views.TradeDetailsPage"
+             FlowDirection="RightToLeft"
+             BackgroundColor="AntiqueWhite">
+    <pancakeView:PancakeView BackgroundGradientStartColor="#536976"
+                             BackgroundGradientEndColor="#BBD2C5">
+        <StackLayout Padding="10">
+            <Label Text="הפריט המבוקש"
+                   TextColor="WhiteSmoke"
+                   FontSize="Large"
+                   FontAttributes="Bold" />
+            <Frame Padding="0"
+                   CornerRadius="10"
+                   BackgroundColor="AntiqueWhite">
+                <StackLayout Orientation="Horizontal"
+                             Padding="10">
+                    <Image Source="{Binding RequestedItem.ImageSource}"
+                           d:Source="ic_city"
+                           HeightRequest="125"
+                           WidthRequest="100" />
+                    <StackLayout Padding="5,0"
+                                 HorizontalOptions="FillAndExpand">
+                        <Label Text="{Binding RequestedItem.ItemName}"
+                               d:Text="הארי פוטר"
+                               TranslationY="15"
+                               TextColor="DarkOliveGreen"
+                               FontAttributes="Bold"
+                               FontSize="Large" />
+                        <Label Text="{Binding RequestedItem.UploadDate}"
+                               d:Text="10/10/10"
+                               VerticalOptions="EndAndExpand" />
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+            <Label Text="פריטים הצעו בעד פריט זה"
+                   TextColor="WhiteSmoke"
+                   FontSize="Large"
+                   FontAttributes="Bold" />
+            <ListView ItemsSource="{Binding Items}"
+                      HasUnevenRows="True">
+                <d:ListView.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>פריט ראשון</x:String>
+                        <x:String>פריט שני</x:String>
+                        <x:String>פריט שלישי</x:String>
+                        <x:String>פריט רביעי</x:String>
+                        <x:String>פריט חמישי</x:String>
+                    </x:Array>
+                </d:ListView.ItemsSource>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame Padding="0"
+                                   Margin="0,5"
+                                   CornerRadius="10"
+                                   BackgroundColor="AntiqueWhite">
+                                <StackLayout Orientation="Horizontal"
+                                             Padding="10">
+                                    <Image Source="{Binding ImageSource}"
+                                           d:Source="ic_user"
+                                           HeightRequest="125"
+                                           WidthRequest="100" />
+                                    <StackLayout Padding="5,0"
+                                                 BackgroundColor="Bisque"
+                                                 HorizontalOptions="FillAndExpand">
+                                        <Label Text="{Binding ItemName}"
+                                               d:Text="{Binding}"
+                                               TranslationY="15"
+                                               TextColor="DarkOliveGreen"
+                                               FontAttributes="Bold"
+                                               FontSize="Large" />
+                                        <Label Text="{Binding UploadDate}"
+                                               d:Text="10/10/10"
+                                               VerticalOptions="EndAndExpand" />
+                                    </StackLayout>
+                                </StackLayout>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </pancakeView:PancakeView>
+</ContentPage>

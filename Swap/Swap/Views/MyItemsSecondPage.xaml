@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Swap.Views.MyItemsSecondPage"
+             BackgroundColor="White">
+    <ScrollView>
+        <StackLayout>
+            <Grid IsVisible="False"
+                  x:Name="VideoGamesViewOptionsGrid">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button x:Name="viewByPlatformButton"
+                        Text="פלטפורמה"
+                        Grid.Column="0"
+                        BackgroundColor="White"
+                        VerticalOptions="Center"
+                        CornerRadius="20"
+                        HeightRequest="40"
+                        BorderColor="Black"
+                        Clicked="viewByPlatform_Button_clicked" />
+                <Button x:Name="viewByVideoGameGenreButton"
+                        Text="ג'אנר"
+                        Grid.Column="1"
+                        BackgroundColor="White"
+                        VerticalOptions="Center"
+                        CornerRadius="20"
+                        HeightRequest="40"
+                        BorderColor="Black"
+                        Clicked="viewVideoGamesByGenre_Button_clicked" />
+                <Button x:Name="viewAllVideoGamesButton"
+                        Text="הכל"
+                        Grid.Column="2"
+                        FontAttributes="Bold"
+                        BorderWidth="1"
+                        VerticalOptions="Center"
+                        BackgroundColor="White"
+                        CornerRadius="20"
+                        HeightRequest="40"
+                        BorderColor="Black"
+                        Clicked="viewAllVideoGames_Button_Clicked" />
+            </Grid>
+            <Grid IsVisible="False"
+                  x:Name="BooksViewOptionsGrid">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button x:Name="viewByBooksGenreButton"
+                        Text="ג'אנר"
+                        Grid.Column="0"
+                        BackgroundColor="White"
+                        VerticalOptions="Center"
+                        CornerRadius="20"
+                        HeightRequest="40"
+                        BorderColor="Black"
+                        Clicked="viewBooksByGenre_Button_clicked" />
+
+                <Button x:Name="viewAllBooksButton"
+                        Text="הכל"
+                        Grid.Column="1"
+                        FontAttributes="Bold"
+                        BorderWidth="1"
+                        VerticalOptions="Center"
+                        BackgroundColor="White"
+                        CornerRadius="20"
+                        HeightRequest="40"
+                        BorderColor="Black"
+                        Clicked="viewAllBooks_Button_Clicked" />
+            </Grid>
+            <StackLayout IsVisible="true"
+                         x:Name="viewAllMainStackLayout"
+                         Spacing="3">
+                <ImageButton x:Name="fourUpButton"
+                             Padding="10,0,0,0"
+                             HeightRequest="35"
+                             WidthRequest="35"
+                             IsVisible="True"
+                             Clicked="changeView_Button_Clicked"
+                             HorizontalOptions="Start"
+                             VerticalOptions="Center"
+                             Source="grid_four_up.png"
+                             BackgroundColor="White" />
+                <ImageButton x:Name="threeUpButton"
+                             Padding="10,0,0,0"
+                             HeightRequest="35"
+                             WidthRequest="35"
+                             IsVisible="False"
+                             Clicked="changeView_Button_Clicked"
+                             HorizontalOptions="Start"
+                             VerticalOptions="Center"
+                             Source="grid_three_up.png"
+                             BackgroundColor="White" />
+                <StackLayout x:Name="threeInArowMainStackLayout"
+                             Spacing="10"
+                             IsVisible="True" />
+                <StackLayout x:Name="fourInArowMainStackLayout"
+                             Spacing="10"
+                             IsVisible="False" />
+            </StackLayout>
+            <StackLayout IsVisible="False"
+                         x:Name="viewByVideoGameGenreMainStackLayout"
+                         Spacing="0" />
+            <StackLayout IsVisible="False"
+                         x:Name="viewByPlatformMainStackLayout"
+                         Spacing="0" />
+            <StackLayout IsVisible="False"
+                         x:Name="viewByBooksGenreMainStackLayout"
+                         Spacing="0" />
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

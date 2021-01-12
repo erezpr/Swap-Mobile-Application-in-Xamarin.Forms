@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Swap.Views.SearchResultsPage"
+             AnchorX="0.5">
+    <ScrollView>
+        <StackLayout>
+            <ImageButton x:Name="squaresViewButton"
+                         Padding="10,0,0,0"
+                         HeightRequest="35"
+                         WidthRequest="35"
+                         IsVisible="True"
+                         Clicked="changeView_Button_Clicked"
+                         HorizontalOptions="Start"
+                         VerticalOptions="Center"
+                         Source="grid_two_up.png"
+                         BackgroundColor="White" />
+            <ImageButton x:Name="listViewButton"
+                         Padding="10,0,0,0"
+                         HeightRequest="35"
+                         WidthRequest="35"
+                         IsVisible="False"
+                         Clicked="changeView_Button_Clicked"
+                         HorizontalOptions="Start"
+                         VerticalOptions="Center"
+                         Source="side_left_view.png"
+                         BackgroundColor="White" />
+            <StackLayout x:Name="listStackLayout"
+                         Spacing="10"
+                         IsVisible="True" />
+            <StackLayout x:Name="squaresStackLayout"
+                         Spacing="10"
+                         IsVisible="False" />
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

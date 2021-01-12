@@ -1,0 +1,135 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:Swap.Converters"
+             xmlns:ContentViews="clr-namespace:Swap.ContentViews"
+             xmlns:pancakeView="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             x:Class="Swap.Views.HomePage"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Name="page"
+             Title="דף הבית">
+    <Shell.TitleView>
+        <StackLayout Orientation="Horizontal">
+            <ImageButton Source="refresh.png"
+                         BackgroundColor="#546DFE"
+                         Padding="0"
+                         VerticalOptions="CenterAndExpand"
+                         HorizontalOptions="EndAndExpand"
+                         Command="{Binding RefreshCommand}" />
+        </StackLayout>
+    </Shell.TitleView>
+    <ContentPage.Resources>
+        <converters:NegateBooleanConverter x:Key="NegateBooleanConverter" />
+    </ContentPage.Resources>
+    <pancakeView:PancakeView BackgroundGradientStartColor="#800080"
+                             BackgroundGradientEndColor="#ffc0cb">
+        <RelativeLayout>
+            <ScrollView Padding="0,40,0,15"
+                        Orientation="Vertical"
+                        RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1}">
+                <RelativeLayout>
+                    <Frame x:Name="signInMessage"
+                           Padding="0"
+                           BackgroundColor="#0e444e"
+                           HeightRequest="150"
+                           CornerRadius="10"
+                           Margin="5"
+                           RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}">
+                        <StackLayout Orientation="Vertical"
+                                     Padding="30,10,30,10"
+                                     Spacing="15">
+                            <Label Text="הרשם כדי שנוכל להתאים את החוויה שלך באפליקציה"
+                                   FontSize="18"
+                                   HorizontalTextAlignment="Center"
+                                   TextColor="WhiteSmoke"
+                                   HorizontalOptions="CenterAndExpand" />
+                            <StackLayout Orientation="Horizontal"
+                                         HorizontalOptions="CenterAndExpand"
+                                         Spacing="15"
+                                         VerticalOptions="CenterAndExpand">
+                                <Frame Padding="0"
+                                       CornerRadius="5">
+                                    <Button Text="הרשם"
+                                            FontAttributes="Bold"
+                                            HeightRequest="40"
+                                            CornerRadius="5"
+                                            Command="{Binding PushRegiterPage}"
+                                            BackgroundColor="OrangeRed" />
+                                </Frame>
+                                <Frame Padding="0"
+                                       CornerRadius="5">
+                                    <Button Text="התחבר"
+                                            FontAttributes="Bold"
+                                            CornerRadius="5"
+                                            HeightRequest="40"
+                                            Command="{Binding PushRegiterPage}"
+                                            BackgroundColor="LightBlue" />
+                                </Frame>
+                            </StackLayout>
+                        </StackLayout>
+                    </Frame>
+                    <RelativeLayout x:Name="popularBooksItems"
+                                    RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToView, ElementName=signInMessage, Property=Height ,Constant=30}"
+                                    HeightRequest="300">
+                        <Label Text="ספרים פופולריים"
+                               RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1,Constant=-30}"
+                               RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=X, Factor=1,Constant=15}"
+                               FontSize="20"
+                               TextColor="WhiteSmoke"
+                               FontAttributes="Bold" />
+                        <ScrollView Orientation="Horizontal"
+                                    Padding="15,2"
+                                    RelativeLayout.YConstraint="{ConstraintExpression  Type=Constant,  Constant=40}"
+                                    RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}">
+                            <Frame Padding="5,10"
+                                   BackgroundColor="Transparent"
+                                   RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}">
+                                <StackLayout BindableLayout.ItemsSource="{Binding PopularBooks}"
+                                             Orientation="Horizontal">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackLayout Orientation="Horizontal">
+                                                <ContentViews:ImagedItemContentView IsEnabled="{Binding BindingContext.IsBusy , Converter={StaticResource NegateBooleanConverter}, Source={x:Reference page}}" />
+                                            </StackLayout>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </StackLayout>
+                            </Frame>
+                        </ScrollView>
+                    </RelativeLayout>
+                    <RelativeLayout x:Name="popularGamesItems"
+                                    RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToView, ElementName=popularBooksItems, Property=Y ,Constant=320}"
+                                    HeightRequest="300">
+                        <Label Text="משחקים פופולריים"
+                               RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1,Constant=-30}"
+                               RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=X, Factor=1,Constant=15}"
+                               FontSize="20"
+                               TextColor="WhiteSmoke"
+                               FontAttributes="Bold" />
+                        <ScrollView Orientation="Horizontal"
+                                    Padding="15,2"
+                                    RelativeLayout.YConstraint="{ConstraintExpression  Type=Constant,  Constant=40}"
+                                    RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}">
+                            <Frame Padding="5,10"
+                                   BackgroundColor="Transparent"
+                                   RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}">
+                                <StackLayout BindableLayout.ItemsSource="{Binding PopularGames}"
+                                             Orientation="Horizontal">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackLayout Orientation="Horizontal">
+                                                <ContentViews:ImagedItemContentView IsEnabled="{Binding BindingContext.IsBusy , Converter={StaticResource NegateBooleanConverter}, Source={x:Reference page}}" />
+                                            </StackLayout>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </StackLayout>
+                            </Frame>
+                        </ScrollView>
+                    </RelativeLayout>
+                </RelativeLayout>
+            </ScrollView>
+        </RelativeLayout>
+    </pancakeView:PancakeView>
+</ContentPage>

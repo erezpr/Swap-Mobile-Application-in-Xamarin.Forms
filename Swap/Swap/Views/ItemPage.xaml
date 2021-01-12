@@ -1,0 +1,262 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:ic="clr-namespace:ImageCircle.Forms.Plugin.Abstractions;assembly=ImageCircle.Forms.Plugin"
+             xmlns:Behaviors="clr-namespace:Swap.Behaviors"
+             xmlns:ContentViews="clr-namespace:Swap.ContentViews"
+             xmlns:converters="clr-namespace:Swap.Converters"
+             xmlns:pancakeView="clr-namespace:Xamarin.Forms.PancakeView;assembly=Xamarin.Forms.PancakeView"
+             mc:Ignorable="d"
+             x:Class="Swap.Views.ItemPage"
+             Title="{Binding ItemName}"
+             FlowDirection="RightToLeft">
+    <ContentPage.Resources>
+        <converters:NegateBooleanConverter x:Key="NegateBooleanConverter" />
+    </ContentPage.Resources>
+    <pancakeView:PancakeView BackgroundGradientStartColor="#800080"
+                             BackgroundGradientEndColor="#ffc0cb">
+
+        <ScrollView Orientation="Vertical"
+                    Padding="0,0,0,15">
+            <RelativeLayout Padding="0,0,0,15"
+                            IsEnabled="{Binding IsBusy, Converter={StaticResource NegateBooleanConverter}}">
+                <CarouselView HeightRequest="230"
+                              ItemsSource="{Binding ImageList}"
+                              BackgroundColor="#ece5ec"
+                              IsSwipeEnabled="True"
+                              RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}">
+                    <CarouselView.ItemTemplate>
+                        <DataTemplate>
+                            <ContentViews:ImageContentView ImageSource="{Binding ImageSource}" />
+                        </DataTemplate>
+                    </CarouselView.ItemTemplate>
+                </CarouselView>
+                <Frame x:Name="itemTitleLabel"
+                       Padding="0"
+                       HeightRequest="60"
+                       RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent,Property=Y, Factor=1 ,Constant=230}"
+                       RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}">
+                    <RelativeLayout>
+                        <Label x:Name="itemName"
+                               Text="{Binding ItemName}"
+                               RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+                               RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=1, Constant=-5}"
+                               VerticalTextAlignment="Center"
+                               HorizontalTextAlignment="Center"
+                               FontSize="Title"
+                               FontAttributes="Bold"
+                               TextColor="#333333" />
+                    </RelativeLayout>
+                </Frame>
+                <Frame x:Name="offerAnExchangeButton"
+                       Padding="0"
+                       CornerRadius="8"
+                       HeightRequest="40"
+                       RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToView, ElementName=itemTitleLabel, Property=Y, Factor=1, Constant=110}"
+                       RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1 ,Constant=-40}"
+                       RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=X, Factor=1, Constant=20}">
+                    <Button Text="הצע החלפה"
+                            Command="{Binding OpenChooseMultipleItemsToOfferTradePageCommand}"
+                            FontSize="16"
+                            FontAttributes="Bold"
+                            TextColor="White"
+                            HorizontalOptions="FillAndExpand"
+                            VerticalOptions="EndAndExpand"
+                            BackgroundColor="#0064D3" />
+                </Frame>
+                <Label x:Name="itemDetailsLabel"
+                       Text="פרטי המוצר"
+                       RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToView,ElementName=offerAnExchangeButton, Property=Y, Constant=60}"
+                       RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1, Constant=-30}"
+                       RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=X, Factor=1, Constant=15}"
+                       FontSize="20"
+                       TextColor="WhiteSmoke"
+                       FontAttributes="Bold" />
+                <Frame x:Name="itemDetailsFrame"
+                       HeightRequest="270"
+                       Padding="0"
+                       CornerRadius="10"
+                       RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToView, ElementName=itemDetailsLabel,Property=Y,Factor=1,Constant=35}"
+                       RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1 ,Constant=-30}"
+                       RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=X, Factor=1, Constant=15}">
+                    <RelativeLayout>
+                        <Label Text="תאריך העלאה"
+                               RelativeLayout.YConstraint="{ConstraintExpression Type=Constant,Constant=15}"
+                               RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+                               RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=X, Factor=1, Constant=10}" />
+                        <Label Text="{Binding UploadDate}"
+                               d:Text="10/10/10"
+                               HorizontalTextAlignment="End"
+                               FlowDirection="RightToLeft"
+                               RelativeLayout.YConstraint="{ConstraintExpression Type=Constant,Constant=15}"
+                               RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.4}"
+                               RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.5}"
+                               FontAttributes="Bold"
+                               TextColor="#333333" />
+                        <Label Text="מצב המוצר"
+                               RelativeLayout.YConstraint="{ConstraintExpression Type=Constant, Constant=40}"
+                               RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+                               RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=X, Factor=1, Constant=10}" />
+                        <Label Text="{Binding Condition}"
+                               d:Text="כמו חדש"
+                               RelativeLayout.YConstraint="{ConstraintExpression Type=Constant,Constant=40}"
+                               RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.4}"
+                               RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.5}"
+                               FontAttributes="Bold"
+                               TextColor="#333333" />
+                        <Label Text="ג'אנר"
+                               RelativeLayout.YConstraint="{ConstraintExpression Type=Constant, Constant=65}"
+                               RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+                               RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=X, Factor=1, Constant=10}" />
+                        <Label Text="{Binding ItemGenre}"
+                               d:Text="פעולה"
+                               RelativeLayout.YConstraint="{ConstraintExpression Type=Constant,Constant=65}"
+                               RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.4}"
+                               RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.5}"
+                               FontAttributes="Bold"
+                               TextColor="#333333" />
+                        <Label  Text="מחבר"
+                                RelativeLayout.YConstraint="{ConstraintExpression Type=Constant, Constant=90}"
+                                RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+                                RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=X, Factor=1, Constant=10}">
+                            <Label.Behaviors>
+                                <Behaviors:BookItemLabelBehavior />
+                            </Label.Behaviors>
+                        </Label>
+                        <Label x:Name="author"
+                               Text="{Binding Author}"
+                               d:Text="אברהם אבינו"
+                               RelativeLayout.YConstraint="{ConstraintExpression Type=Constant,Constant=90}"
+                               RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.4}"
+                               RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.5}"
+                               FontAttributes="Bold"
+                               TextColor="#333333">
+                            <Label.Behaviors>
+                                <Behaviors:BookItemLabelBehavior />
+                            </Label.Behaviors>
+                        </Label>
+                        <Label Text="מספר עמודים"
+                               RelativeLayout.YConstraint="{ConstraintExpression Type=Constant, Constant=115}"
+                               RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+                               RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=X, Factor=1, Constant=10}">
+                            <Label.Behaviors>
+                                <Behaviors:BookItemLabelBehavior />
+                            </Label.Behaviors>
+                        </Label>
+                        <Label Text="{Binding PagesNumber}"
+                               d:Text="200"
+                               HorizontalTextAlignment="End"
+                               RelativeLayout.YConstraint="{ConstraintExpression Type=Constant,Constant=115}"
+                               RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.4}"
+                               RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.5}"
+                               FontAttributes="Bold"
+                               TextColor="#333333">
+                            <Label.Behaviors>
+                                <Behaviors:BookItemLabelBehavior />
+                            </Label.Behaviors>
+                        </Label>
+                        <Label Text="פלטפורמה"
+                               d:IsVisible="False"
+                               RelativeLayout.YConstraint="{ConstraintExpression Type=Constant, Constant=90}"
+                               RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+                               RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=X, Factor=1, Constant=10}">
+                            <Label.Behaviors>
+                                <Behaviors:VideoItemLabelBehavior />
+                            </Label.Behaviors>
+                        </Label>
+                        <Label x:Name="platform"
+                               Text="{Binding Platform}"
+                               RelativeLayout.YConstraint="{ConstraintExpression Type=Constant,Constant=90}"
+                               RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.4}"
+                               RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=0.5}"
+                               FontAttributes="Bold"
+                               TextColor="#333333">
+                            <Label.Behaviors>
+                                <Behaviors:VideoItemLabelBehavior />
+                            </Label.Behaviors>
+                        </Label>
+                        <BoxView Color="LightGray"
+                                 HeightRequest="1"
+                                 RelativeLayout.YConstraint="{ConstraintExpression Type=Constant ,Constant=150}"
+                                 RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1 ,Constant=-30}"
+                                 RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=X, Factor=1 ,Constant=15}" />
+                        <Label Text="תיאור הפריט"
+                               TextColor="#0064D3"
+                               FontAttributes="Bold"
+                               RelativeLayout.YConstraint="{ConstraintExpression Type=Constant ,Constant=160}"
+                               RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+                               RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=X, Factor=1, Constant=10}" />
+                        <Label Text="{Binding Description}"
+                               RelativeLayout.YConstraint="{ConstraintExpression Type=Constant ,Constant=185}"
+                               RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1}"
+                               RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=X, Factor=1, Constant=-15}" />
+                    </RelativeLayout>
+                </Frame>
+                <Label x:Name="sellerDetailsLabel"
+                       Text="פרטים על המוכר"
+                       TextColor="WhiteSmoke"
+                       RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToView,ElementName=itemDetailsFrame,Property=Y,Factor=1, Constant=290}"
+                       RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1, Constant=-30}"
+                       RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=X, Factor=1, Constant=15}"
+                       FontSize="20"
+                       FontAttributes="Bold" />
+                <Frame HeightRequest="170"
+                       Padding="0"
+                       CornerRadius="10"
+                       RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToView,ElementName=sellerDetailsLabel, Property=Y, Factor=1,Constant=35}"
+                       RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1 ,Constant=-30}"
+                       RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=X, Factor=1, Constant=15}">
+                    <RelativeLayout>
+                        <ic:CircleImage RelativeLayout.YConstraint="{ConstraintExpression Type=RelativeToParent, Property=Y, Factor=1 ,Constant=15}"
+                                        RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1, Constant=-85}"
+                                        Source="http://takeaseathome.com/media/images/avatar-placeholder.png"
+                                        HeightRequest="70"
+                                        WidthRequest="70"
+                                        Aspect="AspectFit" />
+                        <Label x:Name="sellerName"
+                               Text="{Binding UserName}"
+                               d:Text="ארז פרסר"
+                               TextColor="#333333"
+                               FontSize="16"
+                               Margin="10,0"
+                               RelativeLayout.YConstraint="{ConstraintExpression Type=Constant,Constant=10}"
+                               RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1 }" />
+                        <Label Text="{Binding UserCity}"
+                               d:Text="תל אביב"
+                               Margin="10,0"
+                               TextColor="#333333"
+                               FontSize="16"
+                               RelativeLayout.YConstraint="{ConstraintExpression Type=Constant,Constant=35}"
+                               RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1 ,Constant=-100}" />
+                        <Label Text="{Binding UserPhoneNumber}"
+                               d:Text="035742658"
+                               Margin="10,0"
+                               HorizontalTextAlignment="End"
+                               TextColor="#333333"
+                               FontSize="16"
+                               RelativeLayout.YConstraint="{ConstraintExpression Type=Constant,Constant=60}"
+                               RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1 ,Constant=-100}" />
+                        <BoxView Color="LightGray"
+                                 HeightRequest="1"
+                                 RelativeLayout.YConstraint="{ConstraintExpression Type=Constant ,Constant=120}"
+                                 RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width, Factor=1 ,Constant=-30}"
+                                 RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=X, Factor=1 ,Constant=15}" />
+                        <Label Text="פריטים נוספים של המוכר >"
+                               TextColor="#0064D3"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               HorizontalTextAlignment="End"
+                               RelativeLayout.YConstraint="{ConstraintExpression Type=Constant,Constant=133}"
+                               RelativeLayout.XConstraint="{ConstraintExpression Type=RelativeToParent, Property=X, Factor=1, Constant=15}">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OpenMyItemsPageCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </RelativeLayout>
+                </Frame>
+            </RelativeLayout>
+        </ScrollView>
+    </pancakeView:PancakeView>
+</ContentPage>
